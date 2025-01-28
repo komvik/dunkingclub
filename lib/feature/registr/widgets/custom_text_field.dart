@@ -21,7 +21,13 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     double inputHeight = screenHeight * 0.005;
+    // Определяем коэффициент в зависимости от ориентации
+    double fontSizeCoefficient =
+        MediaQuery.of(context).orientation == Orientation.portrait
+            ? 0.05
+            : 0.04;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
@@ -33,7 +39,7 @@ class CustomTextField extends StatelessWidget {
           obscureText: obscureText,
           maxLength: maxLength,
           style: TextStyle(
-            fontSize: MediaQuery.of(context).size.width * 0.005,
+            fontSize: screenWidth * fontSizeCoefficient,
             color: Theme.of(context).inputDecorationTheme.labelStyle?.color,
           ),
           decoration: InputDecoration(

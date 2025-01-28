@@ -1,0 +1,30 @@
+<mxfile host="65bd71144e">
+    <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+        <mxGraphModel dx="779" dy="697" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-0"/>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0"/>
+                <mxCell id="2" style="edgeStyle=none;html=1;fontColor=#483CF0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="0">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="380" y="90" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="0" value="&lt;meta charset=&quot;utf-8&quot;&gt;Этот метод пытается войти в систему с указанными &lt;strong&gt;email&lt;/strong&gt; и &lt;strong&gt;паролем&lt;/strong&gt;" style="text;whiteSpace=wrap;html=1;fontColor=#483CF0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="70" y="70" width="140" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="1" value="&lt;meta charset=&quot;utf-8&quot;&gt;signInWithEmailAndPassword(&#10;      email: email,&#10;      password: password,&#10;    );" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="400" y="70" width="190" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Future&amp;lt;User?&amp;gt; signInUser(String email, String password) async {&lt;br&gt;&amp;nbsp;try {&lt;br&gt;&amp;nbsp; final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(&lt;br&gt;&amp;nbsp; &amp;nbsp; email: email,&amp;nbsp; password: password,&lt;br&gt;    );&lt;br&gt;    return userCredential.user; // Успех&lt;br&gt;  } on FirebaseAuthException catch (e) {&lt;br&gt;    if (e.code == 'user-not-found') {&lt;br&gt;      print('Пользователь с таким email не найден.');&lt;br&gt;    } else if (e.code == 'wrong-password') {&lt;br&gt;      print('Неверный пароль.');&lt;br&gt;    } else {&lt;br&gt;      print('Ошибка входа: ${e.message}');&lt;br&gt;    }&lt;br&gt;    return null; // Ошибка&lt;br&gt;  }&lt;br&gt;}" style="text;whiteSpace=wrap;html=1;fontColor=#EEEEEE;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="111" y="211" width="470" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="&lt;meta charset=&quot;utf-8&quot;&gt;Future&amp;lt;User?&amp;gt; signInUser(String email, String password) async {&#10;  try {&#10;    final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(&#10;      email: email,&#10;      password: password,&#10;    );&#10;    return userCredential.user;&#10;  } on FirebaseAuthException catch (e) {&#10;    switch (e.code) {&#10;      case 'user-not-found':&#10;        print('Пользователь с таким email не найден.');&#10;        break;&#10;      case 'wrong-password':&#10;        print('Неверный пароль.');&#10;        break;&#10;      case 'invalid-email':&#10;        print('Некорректный формат email.');&#10;        break;&#10;      case 'user-disabled':&#10;        print('Аккаунт пользователя был отключен.');&#10;        break;&#10;      case 'operation-not-allowed':&#10;        print('Метод аутентификации с email и паролем не включен в Firebase.');&#10;        break;&#10;      case 'too-many-requests':&#10;        print('Слишком много попыток входа. Пожалуйста, подождите.');&#10;        break;&#10;      case 'network-request-failed':&#10;        print('Ошибка сети. Пожалуйста, проверьте подключение к интернету.');&#10;        break;&#10;      case 'internal-error':&#10;        print('Внутренняя ошибка сервера Firebase.');&#10;        break;&#10;      default:&#10;        print('Неизвестная ошибка: ${e.message}');&#10;    }&#10;    return null;&#10;  }&#10;}" style="text;whiteSpace=wrap;html=1;fontColor=#EEEEEE;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="110.9999334716797" y="509.99928985595704" width="463" height="584" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="&lt;meta charset=&quot;utf-8&quot;&gt;Пример обработки ошибок в функции:" style="text;whiteSpace=wrap;html=1;fontColor=#EEEEEE;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="187.9999334716797" y="157.00151885986327" width="248" height="36" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -1,10 +1,14 @@
 import 'package:dunkingclub/config/colors.dart';
-import 'package:dunkingclub/feature/registr/countries.dart';
+import 'package:dunkingclub/feature/registr/models/continent_helper.dart';
+import 'package:dunkingclub/feature/registr/repositories/countries.dart';
 import 'package:dunkingclub/feature/navigat/registration_screen.dart';
+import 'package:dunkingclub/feature/registr/repositories/firebase_authentication_repository.dart';
+import 'package:dunkingclub/feature/registr/widgets/register_button.dart';
 import 'package:dunkingclub/feature/registr/widgets/custom_text_field.dart';
 import 'package:dunkingclub/feature/registr/widgets/custom_dropdown.dart';
-import 'package:dunkingclub/feature/registr/validation.dart';
+import 'package:dunkingclub/feature/registr/widgets/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -16,10 +20,10 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final _emailController = TextEditingController();
-  final _cityCodeController = TextEditingController(); //(text: "87600");
+  final _cityCodeController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  bool _isFormSubmitted = false;
+  final bool _isFormSubmitted = false;
   bool _obscurePassword = true;
   int _maxLengthCityCode = 1;
   final double _verticalIndent = 5.0;
@@ -40,6 +44,82 @@ class _AuthScreenState extends State<AuthScreen> {
           continent ?? "", _selectedCountry);
     });
   }
+  //============================================================
+  //          F I R E B A S E
+  // Пример обработки данных, полученных с формы
+  //функция где я буду проверять базу данных firebase и на основании
+  //существования аккаунта принимать дальнейшие действия
+  //               D E
+  //Funktion, mit der ich die Firebase-Datenbank überprüfe
+  //und basierend auf der Kontoexistenz weitere Maßnahmen ergreife
+
+  Future<void> _authenticationPlayerInFireBaseAndSaveData() async {
+    try {
+      await context.read<FirebaseAuthenticationRepository>().createUser(
+          _emailController.text,
+          '${_passwordController.text}plz${_cityCodeController.text}');
+
+      //await _addPlayers();
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Error user registring."),
+        ),
+      );
+    }
+  }
+
+  Future<String?> _checkIfUserExistsInDatabase() async {
+    String? answer = "";
+    answer = await context
+        .read<FirebaseAuthenticationRepository>()
+        .checkIfUserExists(_emailController.text,
+            '${_passwordController.text}plz${_cityCodeController.text}');
+    return answer;
+  }
+
+  void _registerUser(Map<String, String> userData) async {
+    String? answer = await _checkIfUserExistsInDatabase();
+//_______________________________________________
+    if (answer == "user_found") {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("user_found"),
+      ));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const RegistrationScreen()));
+    }
+//_______________________________________________
+    if (answer == "User with this email not found.") {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("$answer"),
+      ));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const RegistrationScreen()));
+    }
+//_______________________________________________
+    if (answer == "Incorrect password") {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("$answer or City Code"),
+      ));
+      //  Navigator.push(context,
+      //  MaterialPageRoute(builder: (context) => const RegistrationScreen()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("$answer"),
+      ));
+    }
+//_______________________________________________
+
+    // _authenticationPlayerInFireBaseAndSaveData();
+
+    // Navigator.push(context,
+    //     MaterialPageRoute(builder: (context) => const RegistrationScreen()));
+  }
+//
+//
+//
+//
+//==========================================================
 
   @override
   void initState() {
@@ -61,15 +141,17 @@ class _AuthScreenState extends State<AuthScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registration'),
+        title: const Text('Dunkingclub - Registration'),
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+          padding: isPortrait
+              ? const EdgeInsets.fromLTRB(10, 60, 10, 0)
+              : const EdgeInsets.fromLTRB(10, 0, 55, 0),
           child: isPortrait
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+              ? ListView(
+                  //mainAxisAlignment: MainAxisAlignment.start,
+                  //crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Column(
                       children: [
@@ -138,8 +220,6 @@ class _AuthScreenState extends State<AuthScreen> {
                                       // Сбрасываем код города при изменении страны
                                       // Очищаем поле ввода кода города
                                       _cityCodeController.clear();
-
-// Обновляем maxLengthCityCode в зависимости от выбранной страны и континента
                                       if (_selectedContinent == "AF") {
                                         _maxLengthCityCode =
                                             countryMaxCityCodeLengthAF[
@@ -286,42 +366,28 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                         // Password input field
 
-                        const SizedBox(height: 2),
+                        const SizedBox(height: 5),
                         // Registration button
                         SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                _isFormSubmitted = true;
-                              });
-
-                              // Check if all fields are valid
-                              if (validateEmail(_emailController.text) ==
-                                      null &&
-                                  _selectedCountry != null &&
-                                  validateCityCode(_cityCodeController.text) ==
-                                      null &&
-                                  validatePassword(_passwordController.text) ==
-                                      null) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RegistrationScreen(),
-                                  ),
-                                );
-                              }
-                            },
-                            child: const Text('Register'),
+                          // width: double.infinity,
+                          width: 250,
+                          height: 50,
+                          child: RegisterButton(
+                            emailController: _emailController,
+                            cityCodeController: _cityCodeController,
+                            passwordController: _passwordController,
+                            selectedContinent: _selectedContinent,
+                            selectedCountry: _selectedCountry,
+                            isFormSubmitted: _isFormSubmitted,
+                            onRegister: _registerUser, // Передаём callback
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10), // Space between button and logo
+                    const SizedBox(height: 30), // Space between button and logo
                     SizedBox(
-                      width: 300,
-                      height: 300,
+                      width: 220,
+                      height: 220,
                       child: Image.asset(
                         'assets/images/dunk_dark.png',
                       ),
@@ -339,8 +405,8 @@ class _AuthScreenState extends State<AuthScreen> {
                   children: [
                     // Секция с иконкой
                     SizedBox(
-                      width: 300,
-                      height: 300,
+                      width: 200,
+                      height: 200,
                       child: Center(
                         child: Image.asset(
                           'assets/images/dunk_dark.png',
@@ -351,8 +417,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
                     // Секция с формой
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: ListView(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // __________________________________Email input field
                           Padding(
@@ -582,30 +648,14 @@ class _AuthScreenState extends State<AuthScreen> {
                           // Registration button
                           SizedBox(
                             width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  _isFormSubmitted = true;
-                                });
-
-                                if (validateEmail(_emailController.text) ==
-                                        null &&
-                                    validateCityCode(
-                                            _cityCodeController.text) ==
-                                        null &&
-                                    validatePassword(
-                                            _passwordController.text) ==
-                                        null) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegistrationScreen(),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: const Text('Register'),
+                            child: RegisterButton(
+                              emailController: _emailController,
+                              cityCodeController: _cityCodeController,
+                              passwordController: _passwordController,
+                              selectedContinent: _selectedContinent,
+                              selectedCountry: _selectedCountry,
+                              isFormSubmitted: _isFormSubmitted,
+                              onRegister: _registerUser, // Передаём callback
                             ),
                           ),
                         ],
