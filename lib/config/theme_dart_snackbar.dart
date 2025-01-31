@@ -1,4 +1,3 @@
-import 'package:dunkingclub/config/colors.dart';
 import 'package:flutter/material.dart';
 
 final SnackBarThemeData customSnackBarTheme = SnackBarThemeData(

@@ -15,8 +15,8 @@ dependencies:
   firebase_messaging: ^15.2.1
   firebase_storage: ^12.4.1
   flutter:
-    sdk: flutter
-  flutter_launcher_icons: ^0.14.3
+    sdk: flutter 
+  flutter_native_splash: ^2.4.4
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.2
   provider: ^6.1.2
@@ -26,6 +26,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.3
 
 flutter:
   uses-material-design: true
@@ -39,4 +40,10 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: assets/icons/   
+  image_path: assets/icons/icon_icon_nba.png 
+   
+
+flutter_native_splash:
+  color: "#2E2E2E"
+  image: assets/splach/icon_splash.png
+  

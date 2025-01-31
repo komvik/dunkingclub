@@ -1,7 +1,8 @@
 import 'package:dunkingclub/config/colors.dart';
+import 'package:dunkingclub/feature/navigat/navigation_screen.dart';
 import 'package:dunkingclub/feature/registr/models/continent_helper.dart';
 import 'package:dunkingclub/feature/registr/repositories/countries.dart';
-import 'package:dunkingclub/feature/navigat/registration_screen.dart';
+import 'package:dunkingclub/feature/registr/screen/registration_screen.dart';
 import 'package:dunkingclub/feature/registr/repositories/firebase_authentication_repository.dart';
 import 'package:dunkingclub/feature/registr/widgets/register_button.dart';
 import 'package:dunkingclub/feature/registr/widgets/custom_text_field.dart';
@@ -53,43 +54,19 @@ class _AuthScreenState extends State<AuthScreen> {
   //Funktion, mit der ich die Firebase-Datenbank überprüfe
   //und basierend auf der Kontoexistenz weitere Maßnahmen ergreife
 
-  Future<void> _authenticationPlayerInFireBaseAndSaveData() async {
-    try {
-      await context.read<FirebaseAuthenticationRepository>().createUser(
-          _emailController.text,
-          '${_passwordController.text}plz${_cityCodeController.text}');
-
-      //await _addPlayers();
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Error user registring."),
-        ),
-      );
-    }
-  }
-
-  Future<String?> _checkIfUserExistsInDatabase() async {
+  void _registerUser(Map<String, String> userData) async {
     String? answer = "";
     answer = await context
         .read<FirebaseAuthenticationRepository>()
         .checkIfUserExists(_emailController.text,
             '${_passwordController.text}plz${_cityCodeController.text}');
-    return answer;
-  }
-
-  void _registerUser(Map<String, String> userData) async {
-    String? answer = await _checkIfUserExistsInDatabase();
 //_______________________________________________
-    if (answer == "user_found") {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("user_found"),
-      ));
+    if (answer == "user_found" && mounted) {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const RegistrationScreen()));
+          MaterialPageRoute(builder: (context) => const NavigationScreen()));
     }
 //_______________________________________________
-    if (answer == "User with this email not found.") {
+    if (answer == "User with this email not found." && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("$answer"),
       ));
@@ -97,28 +74,20 @@ class _AuthScreenState extends State<AuthScreen> {
           MaterialPageRoute(builder: (context) => const RegistrationScreen()));
     }
 //_______________________________________________
-    if (answer == "Incorrect password") {
+    if (answer == "Incorrect password" && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("$answer or City Code"),
       ));
       //  Navigator.push(context,
       //  MaterialPageRoute(builder: (context) => const RegistrationScreen()));
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("$answer"),
-      ));
+      if (mounted && answer != "user_found") {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("$answer"),
+        ));
+      }
     }
-//_______________________________________________
-
-    // _authenticationPlayerInFireBaseAndSaveData();
-
-    // Navigator.push(context,
-    //     MaterialPageRoute(builder: (context) => const RegistrationScreen()));
   }
-//
-//
-//
-//
 //==========================================================
 
   @override
@@ -141,7 +110,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dunkingclub - Registration'),
+        title: const Text('Dunkingclub'),
       ),
       body: Center(
         child: Padding(
@@ -306,8 +275,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ? validateCityCode(
                                           _cityCodeController.text)
                                       : null,
-                                  obscureText:
-                                      false, // Городской код не скрываться
+                                  obscureText: false,
+                                  // Городской код не скрываться
                                 ),
                               ),
                             ),
@@ -560,34 +529,18 @@ class _AuthScreenState extends State<AuthScreen> {
                                 // City Code input field
                                 Expanded(
                                   child: SizedBox(
-                                    child: TextField(
-                                      cursorColor: Theme.of(context)
-                                          .inputDecorationTheme
-                                          .labelStyle
-                                          ?.color,
+                                    child: CustomTextField(
                                       controller: _cityCodeController,
-                                      keyboardType: TextInputType.number,
+                                      label: 'City Code',
+                                      icon: Icons.location_on,
                                       maxLength:
-                                          _maxLengthCityCode, // Максимальная длина из изменений
-                                      style: TextStyle(
-                                          fontSize: fontSize,
-                                          color: Theme.of(context)
-                                              .inputDecorationTheme
-                                              .labelStyle
-                                              ?.color),
-                                      decoration: InputDecoration(
-                                        labelText: 'City Code',
-                                        border: const OutlineInputBorder(),
-                                        prefixIcon:
-                                            const Icon(Icons.location_on),
-                                        errorText: _isFormSubmitted
-                                            ? validateCityCode(
-                                                _cityCodeController.text)
-                                            : null,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical:
-                                                inputHeight), // Высота поля
-                                      ),
+                                          _maxLengthCityCode, // Максимальная длина
+                                      errorText: _isFormSubmitted
+                                          ? validateCityCode(
+                                              _cityCodeController.text)
+                                          : null,
+                                      obscureText: false,
+                                      // Городской код не скрываться
                                     ),
                                   ),
                                 ),
