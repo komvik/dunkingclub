@@ -1,3 +1,4 @@
+import 'package:dunkingclub/feature/registr/screen/registration_screen.dart';
 import 'package:dunkingclub/feature/registr/widgets/validation.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,18 @@ class RegisterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
+//testblock
+        Navigator.push(
+            context,
+            //MaterialPageRoute(builder: (context) => const NavigationWrapper()));//zu hauptmenu
+            MaterialPageRoute(
+                builder: (context) => const RegistrationScreen(
+                      email: '',
+                      password: '',
+                    ))); //zu hauptmenu
+
+//testblock
+
         // Проверка всех полей формы на валидность
         if (_validateForm()) {
           // Собираем данные в Map

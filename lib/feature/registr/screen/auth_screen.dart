@@ -1,5 +1,5 @@
 import 'package:dunkingclub/config/colors.dart';
-import 'package:dunkingclub/feature/navigat/navigation_screen.dart';
+import 'package:dunkingclub/feature/navigat/navigation_wrapper.dart';
 import 'package:dunkingclub/feature/registr/models/continent_helper.dart';
 import 'package:dunkingclub/feature/registr/repositories/countries.dart';
 import 'package:dunkingclub/feature/registr/screen/registration_screen.dart';
@@ -63,15 +63,20 @@ class _AuthScreenState extends State<AuthScreen> {
 //_______________________________________________
     if (answer == "user_found" && mounted) {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const NavigationScreen()));
+          MaterialPageRoute(builder: (context) => const NavigationWrapper()));
     }
 //_______________________________________________
     if (answer == "User with this email not found." && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("$answer"),
       ));
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const RegistrationScreen()));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const RegistrationScreen(
+                    email: '',
+                    password: '',
+                  )));
     }
 //_______________________________________________
     if (answer == "Incorrect password" && mounted) {
