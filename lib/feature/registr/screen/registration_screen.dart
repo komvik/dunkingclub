@@ -11,10 +11,18 @@ import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final String email;
+  final String continent;
+  final String country;
+  final String cityCode;
   final String password;
 
   const RegistrationScreen(
-      {super.key, required this.email, required this.password});
+      {super.key,
+      required this.email,
+      required this.continent,
+      required this.country,
+      required this.cityCode,
+      required this.password});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -25,12 +33,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   // Variable to store the selected avatar
   String _selectedAvatar = 'assets/images_avatar/avatar1.png';
   String _email = "";
+  String _continent = "";
+  String _country = "";
+  String _cityCode = "";
   String _password = "";
 
   @override
   void initState() {
     super.initState();
     _email = widget.email;
+    _continent = widget.continent;
+    _country = widget.country;
+    _cityCode = widget.cityCode;
     _password = widget.password;
     _loadPlayers();
   }
@@ -118,11 +132,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
       await _addPlayers();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Error user registring."),
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Error user registring."),
+          ),
+        );
+      }
     }
   }
 
@@ -135,6 +151,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
         await playerRef.set({
           'email': _email,
+          'continent': _continent,
+          'country': _country,
+          'cityCode': _cityCode,
           'password': _password,
           'firstName': _controllerName.text,
           'lastName': _controllerLastname.text,
@@ -143,16 +162,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           'mobileNumber': _controllerMobilnum.text,
           'uid': user.uid,
         });
-
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const NavigationWrapper()),
-        );
+        if (mounted) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const NavigationWrapper()),
+          );
+        }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Error data savig."),
-          ),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Error data savig."),
+            ),
+          );
+        }
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -163,194 +185,187 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
-  void _clearFields() {
-    //  TODO clear alle felder
-  }
+  // void _clearFields() {
+  //
+  // }
 
 //=======================================
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/new_background.png"),
-          fit: BoxFit.cover,
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Dunkingclub'),
       ),
-      child: Scaffold(
-        backgroundColor: const Color.fromARGB(0, 255, 255, 255),
-        body: Container(
-          width: 430,
-          height: 900,
-          padding: const EdgeInsets.only(top: 70, bottom: 0, left: 0, right: 0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                // Text oben
-                const Text(
-                  "Erstelle deinen eigenen Avatar (optional)",
-                  style: TextStyle(color: Colors.white),
-                ),
-                Row(
-                  children: [
-                    const SizedBox(width: 10),
-                    // List Avatar
-                    SizedBox(
-                      width: 270,
-                      height: 70,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: avatars.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedAvatar = avatars[index];
+      body: Container(
+        width: 430,
+        height: 900,
+        padding: const EdgeInsets.only(top: 70, bottom: 0, left: 0, right: 0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              // Text oben
+              const Text(
+                "Erstelle deinen eigenen Avatar (optional)",
+                style: TextStyle(color: Colors.white),
+              ),
+              Row(
+                children: [
+                  const SizedBox(width: 10),
+                  // List Avatar
+                  SizedBox(
+                    width: 270,
+                    height: 70,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: avatars.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedAvatar = avatars[index];
 
-                                /// Update the selected avatar
-                              });
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 5),
-                              child: CircleAvatar(
-                                radius: 30,
-                                backgroundImage:
-                                    ExactAssetImage(avatars[index]),
-                              ),
+                              /// Update the selected avatar
+                            });
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5),
+                            child: CircleAvatar(
+                              radius: 15,
+                              backgroundImage: ExactAssetImage(avatars[index]),
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    // Pic Image
-                    IconButton(
-                      iconSize: 48,
-                      icon: const Icon(Icons.photo_library, color: Colors.blue),
-                      onPressed:
-                          _pickImage, // Вызов функции для выбора изображения
-                      tooltip: 'Wählen Sie ein Foto aus der Galerie aus',
-                    ),
-                  ],
-                ),
-
-                // Avatar
-                CircleAvatar(
-                  radius: 70,
-                  backgroundImage: ExactAssetImage(_selectedAvatar),
-                ),
-//
-                //===========================================  Begin TextFields
-//
-                //____________________________ Name
-                TextFormField(
-                  controller: _controllerName,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                  decoration: const InputDecoration(
-                    label: Text("Name"),
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                  validator: isValidText,
-                ),
-                //____________________________ Nachname
-                TextFormField(
-                  controller: _controllerLastname,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                  decoration: const InputDecoration(
-                    label: Text("Nachname"),
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                  validator: isValidText,
-                ),
-                //____________________________ Spitzname
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 200,
-                      child: TextFormField(
-                        controller: _controllerNickname,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                        decoration: const InputDecoration(
-                          label: Text("Spitzname (optional)"),
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
                           ),
-                        ),
-                        validator: isValidText,
-                      ),
+                        );
+                      },
                     ),
-                    const SizedBox(
-                        width: 10), //____________________________ Handynummer
+                  ),
+                  const SizedBox(width: 5),
+                  // Pic Image
+                  IconButton(
+                    iconSize: 20,
+                    icon: const Icon(Icons.photo_library, color: Colors.blue),
+                    onPressed:
+                        _pickImage, // Вызов функции для выбора изображения
+                    tooltip: 'Wählen Sie ein Foto aus der Galerie aus',
+                  ),
+                ],
+              ),
 
-                    SizedBox(
-                      width: 180,
-                      child: TextFormField(
-                        controller: _controllerMobilnum,
-                        style: const TextStyle(
+              // Avatar
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: ExactAssetImage(_selectedAvatar),
+              ),
+              //
+              //===========================================  Begin TextFields
+              //
+              //____________________________ Name
+              TextFormField(
+                controller: _controllerName,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+                decoration: const InputDecoration(
+                  label: Text("Name"),
+                  labelStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
+                ),
+                validator: isValidText,
+              ),
+              //____________________________ Nachname
+              TextFormField(
+                controller: _controllerLastname,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+                decoration: const InputDecoration(
+                  label: Text("Nachname"),
+                  labelStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
+                ),
+                validator: isValidText,
+              ),
+              //____________________________ Spitzname
+              Row(
+                children: [
+                  SizedBox(
+                    width: 150,
+                    child: TextFormField(
+                      controller: _controllerNickname,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                      decoration: const InputDecoration(
+                        label: Text("Spitzname (optional)"),
+                        labelStyle: TextStyle(
                           color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 12,
                         ),
-                        decoration: const InputDecoration(
-                          label: Text("Handynummer (optional)"),
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                        ),
-                        validator: isValidText,
                       ),
+                      validator: isValidText,
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                      width: 10), //____________________________ Handynummer
 
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.transparent),
-                  ),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _authenticationPlayerInFireBaseAndSaveData();
-                      //_addPlayers();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Center(
-                              child: Text("Daten erfolgreich gespeichert.")),
+                  SizedBox(
+                    width: 150,
+                    child: TextFormField(
+                      controller: _controllerMobilnum,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                      decoration: const InputDecoration(
+                        label: Text("Handynummer (optional)"),
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
                         ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          margin: EdgeInsets.only(bottom: 70.0),
-                          content: Center(
-                              child: Text("Daten müssen korrigiert werden.")),
-                        ),
-                      );
-                    }
-                  },
-                  child: Text(
-                    "Speichern",
-                    style: Theme.of(context).textTheme.displayMedium,
+                      ),
+                      validator: isValidText,
+                    ),
                   ),
+                ],
+              ),
+
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.transparent),
                 ),
-              ],
-            ),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _authenticationPlayerInFireBaseAndSaveData();
+                    //_addPlayers();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Center(
+                            child: Text("Daten erfolgreich gespeichert.")),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        margin: EdgeInsets.only(bottom: 70.0),
+                        content: Center(
+                            child: Text("Daten müssen korrigiert werden.")),
+                      ),
+                    );
+                  }
+                },
+                child: Text(
+                  "Speichern",
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
+              ),
+            ],
           ),
         ),
       ),

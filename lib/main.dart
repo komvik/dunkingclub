@@ -1,3 +1,7 @@
+import 'package:dunkingclub/feature/players/models/player_firestore.dart';
+import 'package:dunkingclub/feature/players/models/player_storage.dart';
+import 'package:dunkingclub/feature/players/repositories/player_repository_firebase.dart';
+import 'package:dunkingclub/feature/players/repositories/player_repository_storage.dart';
 import 'package:dunkingclub/feature/registr/models/login_firebase.dart';
 import 'package:dunkingclub/feature/registr/repositories/firebase_authentication_repository.dart';
 import 'package:dunkingclub/feature/registr/screen/auth_screen.dart';
@@ -17,11 +21,11 @@ void main() async {
     MultiProvider(
       providers: [
         // Provider<MockDbRepositoryPlayer>(create: (_) => PlayerMockDB()),
-        // Provider<PlayerRepositoryStorage>(create: (_) => PlayerStorage()),
+        Provider<PlayerRepositoryStorage>(create: (_) => PlayerStorage()),
         Provider<FirebaseAuthenticationRepository>(
             create: (_) => LoginFirebase()),
-        //Provider<PlayerRepositoryFirebase>(
-        //    create: (_) => FirestorePlayerRepository()),
+        Provider<PlayerRepositoryFirebase>(
+            create: (_) => FirestorePlayerRepository()),
       ],
       child: const MainApp(),
     ),

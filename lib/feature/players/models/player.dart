@@ -3,6 +3,9 @@ import "dart:convert";
 class Player {
   final String userId;
   final String eMail;
+  final String continent;
+  final String country;
+  final String cityCode;
   final String password;
   final String firstName;
   final String lastName;
@@ -16,6 +19,9 @@ class Player {
   Player({
     this.userId = "",
     required this.eMail,
+    required this.continent,
+    required this.country,
+    required this.cityCode,
     required this.password,
     this.firstName = "Max",
     this.lastName = "Mustermann",
@@ -35,6 +41,9 @@ class Player {
       'lastName': lastName,
       'nickName': nickName,
       'eMail': eMail,
+      'continent': continent,
+      'country': country,
+      'cityCode': cityCode,
       'password': password,
       'avatarUrl': avatarUrl,
       'availability': availability,
@@ -52,6 +61,9 @@ class Player {
       lastName: json['lastName'] ?? "Mustermann",
       nickName: json['nickName'] ?? "-",
       eMail: json['eMail'] ?? "example@email.mail",
+      continent: json['continent'] ?? "",
+      country: json['country'] ?? "",
+      cityCode: json['cityCode'] ?? "",
       password: json['password'] ?? "",
       avatarUrl: json['avatarUrl'] ?? "assets/images_avatar/avatar1.png",
       availability: List<String>.from(json['availability'] ?? []),
@@ -81,6 +93,9 @@ class Player {
       'lastName': lastName,
       'nickName': nickName,
       'eMail': eMail,
+      'continent': continent,
+      'country': country,
+      'cityCode': cityCode,
       'avatarUrl': avatarUrl,
       'availability': availability,
       'sendMessage': sendMessage,
@@ -97,6 +112,9 @@ class Player {
       lastName: map['lastName'] ?? "Mustermann",
       nickName: map['nickName'] ?? "-",
       eMail: map['eMail'] ?? "example@email.mail",
+      continent: map['continent'] ?? "",
+      country: map['country'] ?? "",
+      cityCode: map['cityCode'] ?? "",
       password: password ?? "",
       avatarUrl: map['avatarUrl'] ?? "assets/images_avatar/avatar1.png",
       availability: List<String>.from(map['availability'] ?? []),

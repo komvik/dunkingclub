@@ -1,4 +1,3 @@
-import 'package:dunkingclub/feature/registr/screen/registration_screen.dart';
 import 'package:dunkingclub/feature/registr/widgets/validation.dart';
 import 'package:flutter/material.dart';
 
@@ -29,14 +28,17 @@ class RegisterButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
 //testblock
-        Navigator.push(
-            context,
-            //MaterialPageRoute(builder: (context) => const NavigationWrapper()));//zu hauptmenu
-            MaterialPageRoute(
-                builder: (context) => const RegistrationScreen(
-                      email: '',
-                      password: '',
-                    ))); //zu hauptmenu
+        // Navigator.push(
+        //     context,
+        //     //MaterialPageRoute(builder: (context) => const NavigationWrapper()));//zu hauptmenu
+        //     MaterialPageRoute(
+        //         builder: (context) => RegistrationScreen(
+        //               email: emailController.text,
+        //               continent: selectedContinent!,
+        //               country: selectedCountry!,
+        //               cityCode: cityCodeController.text,
+        //               password: passwordController.text,
+        //             ))); //zu hauptmenu
 
 //testblock
 

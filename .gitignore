@@ -1,4 +1,5 @@
 # Miscellaneous
+
 *.class
 *.log
 *.pyc
@@ -16,6 +17,10 @@ migrate_working_dir/
 *.iws
 .idea/
 
+## add from komvik
+.build/
+.cache/
+
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
@@ -29,6 +34,7 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
+.packages
 /build/
 
 # Symbolication related
@@ -37,13 +43,37 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
+#iOS - specific files
+## add from komvik
+/ios/Pods/
+/ios/.symlinks/
+/ios/Flutter/flutter_assets/
+/ios/GoogleService-Info.plist
+
 # Android Studio will place build artifacts here
 /android/app/debug
 /android/app/profile
 /android/app/release
+## add from komvik
+/android/.gradle/
+/android/app/build/
+/android/build/
+
 
 #API Keys
-#/lib/firebase_options.dart
-#/android/app/google-services.json
-#/macos/Runner/GoogleService-Info.plist
-#/ios/Runner/GoogleService-Info.plist
+/lib/firebase_options.dart
+/android/app/google-services.json
+firebase-service-account.json
+/macos/Runner/GoogleService-Info.plist
+/ios/Runner/GoogleService-Info.plist
+
+
+## add from komvik ALL bottom
+# MacOS-specific files (если проект использует macOS)
+macos/.symlinks/
+# Web-specific files (если проект использует web)
+web/.dart_tool/
+# Windows-specific files (если проект использует Windows)
+windows/.symlinks/
+# Linux-specific files (если проект использует Linux)
+linux/.symlinks/

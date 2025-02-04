@@ -37,6 +37,7 @@ class _InfoPlayersScreenState extends State<InfoPlayersScreen> {
 
 //Move to the next player
 //__________________________________________________
+  // ignore: unused_element
   void _nextPlayer() {
     setState(() {
       if (_currentPlayerIndex < _players.length - 1) {
@@ -62,11 +63,13 @@ class _InfoPlayersScreenState extends State<InfoPlayersScreen> {
         .deletePlayerByEmail(playerToDelete.eMail);
 
     // zeige status
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(
-              "${playerToDelete.firstName} ${playerToDelete.lastName} DELETED!")),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+                "${playerToDelete.firstName} ${playerToDelete.lastName} DELETED!")),
+      );
+    }
   }
 
   @override

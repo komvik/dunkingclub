@@ -73,9 +73,13 @@ class _AuthScreenState extends State<AuthScreen> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => const RegistrationScreen(
-                    email: '',
-                    password: '',
+              builder: (context) => RegistrationScreen(
+                    email: "${userData["email"]}",
+                    password:
+                        "${userData["password"]}plz${userData["cityCode"]}",
+                    continent: "${userData["continent"]}",
+                    country: "${userData["country"]}",
+                    cityCode: "${userData["cityCode"]}",
                   )));
     }
 //_______________________________________________
