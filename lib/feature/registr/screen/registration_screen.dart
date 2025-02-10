@@ -4,9 +4,11 @@ import 'package:dunkingclub/feature/players/models/player.dart';
 import 'package:dunkingclub/feature/players/repositories/player_avatar_images.dart';
 import 'package:dunkingclub/feature/players/repositories/player_repository_storage.dart';
 import 'package:dunkingclub/feature/registr/repositories/firebase_authentication_repository.dart';
+import 'package:dunkingclub/feature/registr/widgets/custom_text_field.dart';
+import 'package:dunkingclub/feature/registr/widgets/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -31,7 +33,9 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   // Variable to store the selected avatar
-  String _selectedAvatar = 'assets/images_avatar/avatar1.png';
+  String _selectedCategory = avatarCategories.keys.first;
+
+  String _selectedAvatar = 'assets/images_avatar/freelogo/avatar1.png';
   String _email = "";
   String _continent = "";
   String _country = "";
@@ -41,6 +45,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   void initState() {
     super.initState();
+    _selectedAvatar =
+        'assets/images_avatar/$_selectedCategory/${avatarCategories[_selectedCategory]!.first}';
     _email = widget.email;
     _continent = widget.continent;
     _country = widget.country;
@@ -56,17 +62,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _controllerNickname = TextEditingController();
   final TextEditingController _controllerMobilnum = TextEditingController();
 
-  final ImagePicker _picker = ImagePicker();
-
-  // choose a new avatar or image
-  Future<void> _pickImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        _selectedAvatar = image.path;
-      });
-    }
-  }
+  final bool _isFormSubmitted = false;
 
 //_______________ Valid Name Nachname Spitzname
   String? isValidText(String? value) {
@@ -146,15 +142,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        final playerRef =
-            FirebaseFirestore.instance.collection('players').doc(user.uid);
+        final playerRef = FirebaseFirestore.instance
+            .collection('players')
+            .doc(_continent)
+            .collection(_country)
+            .doc(_cityCode)
+            .collection('team')
+            .doc(user.uid);
 
         await playerRef.set({
           'email': _email,
-          'continent': _continent,
-          'country': _country,
-          'cityCode': _cityCode,
-          'password': _password,
           'firstName': _controllerName.text,
           'lastName': _controllerLastname.text,
           'nickName': _controllerNickname.text,
@@ -162,6 +159,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           'mobileNumber': _controllerMobilnum.text,
           'uid': user.uid,
         });
+
         if (mounted) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const NavigationWrapper()),
@@ -170,17 +168,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Error data savig."),
-            ),
+            const SnackBar(content: Text("Error saving data.")),
           );
         }
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("User not authorized error!"),
-        ),
+        const SnackBar(content: Text("User not authorized error!!!!!")),
       );
     }
   }
@@ -189,182 +183,198 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //
   // }
 
-//=======================================
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dunkingclub'),
       ),
-      body: Container(
-        width: 430,
-        height: 900,
-        padding: const EdgeInsets.only(top: 70, bottom: 0, left: 0, right: 0),
-        child: Form(
-          key: _formKey,
+      body: Form(
+        key: _formKey,
+//
+//==========================================================================
+//          P O R T R E T
+//==========================================================================
+//
+
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: Column(
             children: <Widget>[
               // Text oben
               const Text(
-                "Erstelle deinen eigenen Avatar (optional)",
+                "Erstelle deinen eigenen Avatar",
                 style: TextStyle(color: Colors.white),
               ),
+              const SizedBox(height: 10),
               Row(
                 children: [
-                  const SizedBox(width: 10),
-                  // List Avatar
-                  SizedBox(
-                    width: 270,
-                    height: 70,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: avatars.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedAvatar = avatars[index];
+                  //  categoryIcons[_selectedCategory] ?? const SizedBox.shrink(),
 
-                              /// Update the selected avatar
+                  SizedBox(
+                    width: 230, // Уменьшенная ширина Dropdown
+
+                    child: Column(
+                      children: [
+                        DropdownButtonFormField<String>(
+                          value: _selectedCategory,
+                          decoration: InputDecoration(
+                            isDense: true, // Уменьшает высоту виджета
+                            filled: true,
+                            fillColor: Colors.grey[600],
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 5),
+                          ),
+                          icon: const Icon(Icons.arrow_drop_down,
+                              color: Colors.blue),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedCategory = newValue!;
+                              _selectedAvatar =
+                                  'assets/images_avatar/$_selectedCategory/${avatarCategories[_selectedCategory]!.first}';
                             });
                           },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                            child: CircleAvatar(
-                              radius: 15,
-                              backgroundImage: ExactAssetImage(avatars[index]),
-                            ),
+                          items: avatarCategories.keys
+                              .map<DropdownMenuItem<String>>((String key) {
+                            return DropdownMenuItem<String>(
+                              value: key,
+                              child: Row(
+                                children: [
+                                  categoryIcons[key] ?? const SizedBox.shrink(),
+                                  const SizedBox(width: 10),
+                                  Text(key,
+                                      style: const TextStyle(fontSize: 16)),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                        SizedBox(
+                          width: 250,
+                          height: 50,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount:
+                                avatarCategories[_selectedCategory]!.length,
+                            itemBuilder: (context, index) {
+                              String avatarPath =
+                                  'assets/images_avatar/$_selectedCategory/${avatarCategories[_selectedCategory]![index]}';
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedAvatar = avatarPath;
+                                  });
+                                },
+                                child: Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage:
+                                        ExactAssetImage(avatarPath),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: 5),
-                  // Pic Image
-                  IconButton(
-                    iconSize: 20,
-                    icon: const Icon(Icons.photo_library, color: Colors.blue),
-                    onPressed:
-                        _pickImage, // Вызов функции для выбора изображения
-                    tooltip: 'Wählen Sie ein Foto aus der Galerie aus',
+
+                  const SizedBox(width: 10),
+
+                  CircleAvatar(
+                    radius: 55,
+                    backgroundImage: ExactAssetImage(_selectedAvatar),
                   ),
                 ],
               ),
 
-              // Avatar
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: ExactAssetImage(_selectedAvatar),
-              ),
-              //
-              //===========================================  Begin TextFields
-              //
-              //____________________________ Name
-              TextFormField(
+              // ==========================================================  Begin TextFields
+              // ___________________________________________________________________ Name
+
+              const SizedBox(height: 15),
+
+              CustomTextField(
                 controller: _controllerName,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-                decoration: const InputDecoration(
-                  label: Text("Name"),
-                  labelStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
-                ),
-                validator: isValidText,
+                label: 'Name',
+                icon: Icons.account_circle,
+                errorText: _isFormSubmitted
+                    ? validateFirstName(_controllerName.text)
+                    : null,
               ),
-              //____________________________ Nachname
-              TextFormField(
+
+              // ________________________________________________________________ Nachname
+
+              CustomTextField(
                 controller: _controllerLastname,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-                decoration: const InputDecoration(
-                  label: Text("Nachname"),
-                  labelStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
-                ),
-                validator: isValidText,
+                label: 'Lastname',
+                icon: Icons.account_circle,
+                errorText: _isFormSubmitted
+                    ? validateLastName(_controllerLastname.text)
+                    : null,
               ),
-              //____________________________ Spitzname
+
+              // ______________________________________________________ Spitzname Handynummer
               Row(
                 children: [
-                  SizedBox(
-                    width: 150,
-                    child: TextFormField(
+                  Expanded(
+                    child: CustomTextField(
                       controller: _controllerNickname,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                      decoration: const InputDecoration(
-                        label: Text("Spitzname (optional)"),
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                      ),
-                      validator: isValidText,
+                      label: 'Nickname (optional)',
+                      icon: Icons.tag_faces,
+                      errorText: _isFormSubmitted
+                          ? validateNickname(_controllerNickname.text)
+                          : null,
                     ),
                   ),
-                  const SizedBox(
-                      width: 10), //____________________________ Handynummer
-
-                  SizedBox(
-                    width: 150,
-                    child: TextFormField(
+                  const SizedBox(width: 8), // Небольшой отступ между полями
+                  Expanded(
+                    child: CustomTextField(
                       controller: _controllerMobilnum,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                      decoration: const InputDecoration(
-                        label: Text("Handynummer (optional)"),
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                      ),
-                      validator: isValidText,
+                      label: 'Mobilnum (optional)',
+                      icon: Icons.phone_android_outlined,
+                      errorText: _isFormSubmitted
+                          ? validateMobilnum(_controllerMobilnum.text)
+                          : null,
                     ),
                   ),
                 ],
               ),
+              const SizedBox(height: 15),
+              // ____________________________________________________________ Button Register
 
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.transparent),
-                ),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _authenticationPlayerInFireBaseAndSaveData();
-                    //_addPlayers();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Center(
-                            child: Text("Daten erfolgreich gespeichert.")),
-                      ),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        margin: EdgeInsets.only(bottom: 70.0),
-                        content: Center(
-                            child: Text("Daten müssen korrigiert werden.")),
-                      ),
-                    );
-                  }
-                },
-                child: Text(
-                  "Speichern",
-                  style: Theme.of(context).textTheme.displayMedium,
+              SizedBox(
+                width: 250,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _authenticationPlayerInFireBaseAndSaveData();
+                      //_addPlayers();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Center(
+                              child: Text("Daten erfolgreich gespeichert.")),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          margin: EdgeInsets.only(bottom: 70.0),
+                          content: Center(
+                              child: Text("Daten müssen korrigiert werden.")),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text("Register"),
                 ),
               ),
+              // ____________________________________________________________ Button Register
             ],
           ),
         ),

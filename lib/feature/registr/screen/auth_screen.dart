@@ -2,9 +2,10 @@ import 'package:dunkingclub/config/colors.dart';
 import 'package:dunkingclub/feature/navigat/navigation_wrapper.dart';
 import 'package:dunkingclub/feature/registr/models/continent_helper.dart';
 import 'package:dunkingclub/feature/registr/repositories/countries.dart';
+import 'package:dunkingclub/feature/registr/widgets/registration_alert_dialog.dart';
 import 'package:dunkingclub/feature/registr/screen/registration_screen.dart';
 import 'package:dunkingclub/feature/registr/repositories/firebase_authentication_repository.dart';
-import 'package:dunkingclub/feature/registr/widgets/register_button.dart';
+import 'package:dunkingclub/feature/registr/widgets/auth_button.dart';
 import 'package:dunkingclub/feature/registr/widgets/custom_text_field.dart';
 import 'package:dunkingclub/feature/registr/widgets/custom_dropdown.dart';
 import 'package:dunkingclub/feature/registr/widgets/validation.dart';
@@ -91,9 +92,14 @@ class _AuthScreenState extends State<AuthScreen> {
       //  MaterialPageRoute(builder: (context) => const RegistrationScreen()));
     } else {
       if (mounted && answer != "user_found") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("$answer"),
-        ));
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            //=========================================================Allert Dialog
+            return RegistrationAlertDialog(answer: answer);
+            //=========================================================Allert Dialog
+          },
+        );
       }
     }
   }
@@ -285,6 +291,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                           _cityCodeController.text)
                                       : null,
                                   obscureText: false,
+
                                   // Городской код не скрываться
                                 ),
                               ),
@@ -350,7 +357,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           // width: double.infinity,
                           width: 250,
                           height: 50,
-                          child: RegisterButton(
+                          child: AuthButton(
                             emailController: _emailController,
                             cityCodeController: _cityCodeController,
                             passwordController: _passwordController,
@@ -610,7 +617,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           // Registration button
                           SizedBox(
                             width: double.infinity,
-                            child: RegisterButton(
+                            child: AuthButton(
                               emailController: _emailController,
                               cityCodeController: _cityCodeController,
                               passwordController: _passwordController,

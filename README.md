@@ -41,6 +41,7 @@
 + ###### [2.5. Gruppenchats und Spielerinteraktion](#2.5)
 + ###### [2.6. Zeitplanung und Benachrichtigungen](#2.6)
 + ###### [2.7. Integration mit sozialen Netzwerken](#2.7)
++ ###### [2.8. Integration mit sozialen Netzwerken](#2.8)
 
 #### [Teil 3.   Technische Merkmale und Architektur: ](#3)
 
@@ -126,6 +127,12 @@
 
 ##### 2.7 Integration mit sozialen Netzwerken
 - **Spiel teilen**: Möglichkeit, einen Link zu einem Spiel in sozialen Netzwerken zu teilen, um Freunde einzuladen.
+[ zurück zum Inhaltsverzeichnis](#Inhaltsverzeichnis)
+
+<a id="2.8"></a>
+
+##### 2.8 Gamification
+- **Spiel teilen**: enwikeln noch. Punkesysteme Abzeichen Heraustorderungen Leaderboards Belohnung 
 [ zurück zum Inhaltsverzeichnis](#Inhaltsverzeichnis)
 
 

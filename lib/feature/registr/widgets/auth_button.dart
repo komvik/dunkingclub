@@ -1,7 +1,7 @@
 import 'package:dunkingclub/feature/registr/widgets/validation.dart';
 import 'package:flutter/material.dart';
 
-class RegisterButton extends StatelessWidget {
+class AuthButton extends StatelessWidget {
   // Параметры, которые принимает виджет
   final TextEditingController emailController;
   final TextEditingController cityCodeController;
@@ -12,7 +12,7 @@ class RegisterButton extends StatelessWidget {
   final void Function(Map<String, String> userData)
       onRegister; // Callback для обработки данных
 
-  const RegisterButton({
+  const AuthButton({
     super.key,
     required this.emailController,
     required this.cityCodeController,
@@ -27,21 +27,6 @@ class RegisterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-//testblock
-        // Navigator.push(
-        //     context,
-        //     //MaterialPageRoute(builder: (context) => const NavigationWrapper()));//zu hauptmenu
-        //     MaterialPageRoute(
-        //         builder: (context) => RegistrationScreen(
-        //               email: emailController.text,
-        //               continent: selectedContinent!,
-        //               country: selectedCountry!,
-        //               cityCode: cityCodeController.text,
-        //               password: passwordController.text,
-        //             ))); //zu hauptmenu
-
-//testblock
-
         // Проверка всех полей формы на валидность
         if (_validateForm()) {
           // Собираем данные в Map
