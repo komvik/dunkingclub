@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 final Map<String, List<String>> avatarCategories = {
-  'bayern': [
+  'bayernreds': [
     'a1.png',
     'a2.png',
     'a3.png',
@@ -12,7 +12,7 @@ final Map<String, List<String>> avatarCategories = {
     'a8.png',
     'a9.png'
   ],
-  'kaufbeuren': [
+  'djkkaufbeuren': [
     'a1.png',
     'a2.png',
     'a3.png',
@@ -34,7 +34,7 @@ final Map<String, List<String>> avatarCategories = {
     'a8.png',
     'a9.png'
   ],
-  'goldenstate': [
+  'dreamplayers': [
     'a1.png',
     'a2.png',
     'a3.png',
@@ -48,14 +48,14 @@ final Map<String, List<String>> avatarCategories = {
 };
 
 final Map<String, Widget> categoryIcons = {
-  'bayern': const SizedBox(
+  'bayernreds': const SizedBox(
     width: 32,
     height: 32,
     child: Image(
         image: AssetImage(
             "assets/images_avatar/icon_club_logo/icon_fcbayern.png")),
   ),
-  'kaufbeuren': const SizedBox(
+  'djkkaufbeuren': const SizedBox(
     width: 32,
     height: 32,
     child: Image(
@@ -69,7 +69,7 @@ final Map<String, Widget> categoryIcons = {
         image: AssetImage(
             "assets/images_avatar/icon_club_logo/icon_freelogo.png")),
   ),
-  'goldenstate': const SizedBox(
+  'dreamplayers': const SizedBox(
     width: 32,
     height: 32,
     child: Image(

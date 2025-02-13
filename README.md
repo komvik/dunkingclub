@@ -16,8 +16,7 @@
 ## Ziel des Projekt 
 
 ```
-        Ziel dieses Projekts ist es,
-        Basketballspieler in Gruppen für Spiele 
+        Ziel dieses Projekts ist es, Basketballspieler in Gruppen für Spiele 
         auf vorab festgelegten Plätzen zu festgelegten
         Zeiten zusammenzubringen.
 ```

@@ -33,10 +33,10 @@ flutter:
   assets:
    - assets/images/
    - assets/images_avatar/
-   - assets/images_avatar/bayern/
+   - assets/images_avatar/bayernreds/
    - assets/images_avatar/freelogo/
-   - assets/images_avatar/goldenstate/
-   - assets/images_avatar/kaufbeuren/
+   - assets/images_avatar/dreamplayers/
+   - assets/images_avatar/djkkaufbeuren/
    - assets/images_avatar/icon_club_logo/
    - assets/images_courts/
    - assets/icons/
