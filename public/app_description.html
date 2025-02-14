@@ -1,160 +1,112 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Program Description</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D A N K I N G C L U B</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>D A N K I N G C L U B</h1>
+        <h2>Detailed instructions for registering and using the program.</h2>
+        <!-- Логотип в правом верхнем углу -->
+        <img src="../assets/logo.png" alt="Logo" class="logo">
+    </header>
 
-    <style>
-      /* Основной стиль для body */
-      body {
-        font-family: Roboto, Helvetica, Arial, sans-serif; /* Задает шрифт для страницы */
-        background-color: #f4f4f4; /* Цвет фона страницы */
-        margin: 0; /* Убирает отступы */
-        padding: 0; /* Убирает внутренние отступы */
-      }
+    <section class="description">
+        <p>Welcome to our program!<br>Below you'll find some key features illustrated with images.<br> When you hover over the image, you'll get a hint.</p>
+    </section>
 
-      /* Контейнер для всей страницы, ограничивает ширину */
-      .container {
-        max-width: 1200px; /* Максимальная ширина контейнера */
-        margin: 0 auto; /* Центрирует контейнер по горизонтали */
-        padding: 20px; /* Добавляет отступы внутри контейнера */
-      }
-
-      /* Контейнер для изображений, использующий flexbox */
-      .image-container {
-        display: flex; /* Используется Flexbox для размещения элементов в строку */
-        flex-wrap: wrap; /* Разрешает оборачивание элементов на новой строке */
-        justify-content: space-between; /* Равномерное распределение элементов */
-        gap: 20px; /* Интервал между изображениями */
-      }
-
-      /* Стиль для каждого блока с изображением */
-      .image-box {
-        position: relative; /* Позволяет позиционировать дочерние элементы внутри блока */
-        flex: 1 1 calc(33% - 20px); /* Определяет, что блок будет занимать 1/3 от доступного пространства (с учетом промежутков) */
-        background-color: white; /* Белый фон для блока */
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Легкая тень для блока */
-        border-radius: 8px; /* Скругляет углы блока */
-        overflow: hidden; /* Обрезает содержимое, которое выходит за пределы блока */
-        transition: transform 0.3s ease; /* Добавляет плавный переход для изменения масштаба при наведении */
-      }
-
-      /* Эффект увеличения блока при наведении */
-      .image-box:hover {
-        transform: scale(1.05); /* Увеличивает размер блока на 5% при наведении */
-      }
-
-      /* Стиль для изображения внутри блока */
-      .image-box img {
-        width: 100%; /* Изображение растягивается на всю ширину блока */
-        height: auto; /* Сохраняет пропорции изображения */
-        display: block; /* Убирает лишние отступы вокруг изображения */
-      }
-
-      /* Стиль для текста под изображением */
-      .image-box p {
-        padding: 15px; /* Добавляет отступы вокруг текста */
-        font-size: 16px; /* Размер шрифта */
-        color: #333; /* Цвет текста */
-      }
-
-      /* Описание, которое появляется при наведении */
-      .description {
-        display: none; /* Скрывает описание по умолчанию */
-        position: absolute; /* Позиционирует описание относительно родительского элемента */
-        top: 50%; /* Центрирует описание по вертикали */
-        left: 50%; /* Центрирует описание по горизонтали */
-        transform: translate(-50%, -50%); /* Корректирует позиционирование, чтобы точно по центру */
-        background-color: white; /* Белый фон для описания */
-        padding: 20px; /* Отступы внутри описания */
-        border-radius: 8px; /* Скругляет углы описания */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Добавляет тень для описания */
-        max-width: 90%; /* Максимальная ширина описания увеличена до 90% */
-        width: 250px; /* Устанавливает фиксированную ширину px */
-        height: 200px; /* Устанавливает фиксированную высоту px */
-        text-align: center; /* Выравнивание текста по центру */
-        font-size: 14px; /* Размер шрифта для описания */
-        color: #333; /* Цвет текста в описании */
-      }
-
-      /* Показывает описание при наведении на контейнер с изображением */
-      .image-box:hover .description {
-        display: block; /* Показывает описание при наведении */
-      }
-
-      /* Адаптивные стили для экранов шириной меньше 768px (мобильные устройства) */
-      @media (max-width: 768px) {
-        .image-box {
-          flex: 1 1 100%; /* На мобильных устройствах блоки растягиваются на всю ширину */
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Table of contents</h1>
-
-      <p>Welcome to our program! Below you'll find some key features illustrated with images.</p>
-
-      <div class="image-container">
-        <!-- Первый контейнер с картинкой и описанием -->
+    <section class="image-container">
         <div class="image-box">
-          <img src="../assets/appimage/image1.png" alt="Registration 1">
-          <div class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet accumsan arcu.
-          </div>
-          <p>This is the first page of registration.</p>
+            <div class="image-text">Authentication</div>
+            <div class="image">
+                <img src="../assets/appimage/image1.png" alt="Image 1">
+                <div class="tooltip">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                     sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, 
+                     sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                     Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+                     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                     sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                      sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</div>
+            </div>
         </div>
-
-        <!-- Второй контейнер с картинкой и описанием -->
         <div class="image-box">
-          <img src="../assets/appimage/image2.png" alt="Registration 2">
-          <div class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet accumsan arcu.
-          </div>
-          <p>This is the second page of registration.</p>
+            <div class="image-text">Choose an Action</div>
+            <div class="image">
+                <img src="../assets/appimage/image2.png" alt="Image 2">
+                <div class="tooltip">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, 
+                    sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                    Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                     sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                     Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</div>
+            </div>
         </div>
-
-        <!-- Третий контейнер с картинкой и описанием -->
         <div class="image-box">
-          <img src="../assets/appimage/image3.png" alt="Registration 3">
-          <div class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet accumsan arcu.
-          </div>
-          <p>This is the third page of registration.</p>
+            <div class="image-text">Logo Selection</div>
+            <div class="image">
+                <img src="../assets/appimage/image3.png" alt="Image 3">
+                <div class="tooltip">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, 
+                    sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                    Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                     sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                     Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</div>
+            </div>
         </div>
-      </div>
+    </section>
 
-      <!-- 2 Пример добавления новых контейнеров -->
-      <div class="image-container">
-        <!-- Первый контейнер с картинкой и описанием -->
+    <section class="image-container">
         <div class="image-box">
-          <img src="../assets/appimage/image4.png" alt="Registration 1">
-          <div class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet accumsan arcu.
-          </div>
-          <p>This is the first page of registration.</p>
+            <div class="image-text">Home screen 4</div>
+            <div class="image">
+                <img src="../assets/appimage/image4.png" alt="Image 4">
+                <div class="tooltip">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, 
+                    sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                    Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                     sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                     Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</div>
+            </div>
         </div>
+        <div class="image-box">
+            <div class="image-text">Image home</div>
+            <div class="image">
+                <img src="../assets/appimage/image5.png" alt="Image 5">
+                <div class="tooltip">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, 
+                    sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                    Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                     sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                     Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</div>
+            </div>
+        </div>
+        <div class="image-box">
+            <div class="image-text">Image chat</div>
+            <div class="image">
+                <img src="../assets/appimage/image6.png" alt="Image 6">
+                <div class="tooltip">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, 
+                    sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                    Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                     sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                     Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</div>
+            </div>
+        </div>
+    </section>
 
-        <!-- Второй контейнер с картинкой и описанием -->
-        <div class="image-box">
-          <img src="../assets/appimage/image5.png" alt="Registration 2">
-          <div class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet accumsan arcu.
-          </div>
-          <p>This is the second page of registration.</p>
-        </div>
-
-        <!-- Третий контейнер с картинкой и описанием -->
-        <div class="image-box">
-          <img src="../assets/appimage/image4.png" alt="Registration 3">
-          <div class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet accumsan arcu.
-          </div>
-          <p>This is the third page of registration.</p>
-        </div>
-      </div>
-    </div>
-  </body>
+</body>
 </html>

@@ -16,9 +16,11 @@ dependencies:
   firebase_storage: ^12.4.1
   flutter:
     sdk: flutter 
+  flutter_dotenv: ^5.2.1
   flutter_native_splash: ^2.4.4
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.2
+  image_picker: ^1.1.2
   provider: ^6.1.2
   shared_preferences: ^2.4.0
 
@@ -41,6 +43,7 @@ flutter:
    - assets/images_courts/
    - assets/icons/
    - assets/icons_chat/
+   - .env
 
 flutter_launcher_icons:
   android: true

@@ -1,14 +1,21 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dunkingclub/feature/navigat/navigation_wrapper.dart';
 import 'package:dunkingclub/feature/players/models/player.dart';
 import 'package:dunkingclub/feature/players/repositories/player_avatar_images.dart';
 import 'package:dunkingclub/feature/players/repositories/player_repository_storage.dart';
 import 'package:dunkingclub/feature/registr/repositories/firebase_authentication_repository.dart';
+import 'package:dunkingclub/feature/registr/widgets/create_avatar_alert_dialog.dart';
 import 'package:dunkingclub/feature/registr/widgets/custom_text_field.dart';
 import 'package:dunkingclub/feature/registr/widgets/validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:image_picker/image_picker.dart';
+// ignore: depend_on_referenced_packages
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -64,62 +71,64 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   final bool _isFormSubmitted = false;
 
-//_______________ Valid Name Nachname Spitzname
+//__________________________________________________________________________
+  Future<void> getCoordinatesFromCityCode(
+      String cityCode, String country) async {
+    String apiKey = dotenv.env['IOS_GOOGLE_API_KEY'] ?? '';
+    log(" API-key: $apiKey");
+
+    String url =
+        "https://maps.googleapis.com/maps/api/geocode/json?address=$cityCode,$country&key=$apiKey";
+
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+
+      if (data['results'].isNotEmpty) {
+        var location = data['results'][0]['geometry']['location'];
+        double latitude = location['lat'];
+        double longitude = location['lng'];
+
+        log("coordinate ($cityCode): latitude: $latitude, longitude: $longitude");
+      } else {
+        log("sity - code  $cityCode not found.");
+      }
+    } else {
+      log("error answer: ${response.statusCode}");
+    }
+  }
+
+// ______________________________________________ choose a new avatar or image
+  final ImagePicker _picker = ImagePicker();
+  Future<void> _pickImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _selectedAvatar = image.path;
+      });
+    }
+  }
+
+//______________________________________________ Valid Name Nachname Spitzname
   String? isValidText(String? value) {
     if (value == null || value.isEmpty) return "Bitte ein text angeben";
     if (value.length < 4) return "text is to short (4 chars minimum)";
     return null;
   }
 
-//======================================= SAVE DATA TO SHAREDPREFERENCES
+// __________________________________________  SAVE DATA TO SHAREDPREFERENCES
   // ignore: unused_field
   List<Player> _players = [];
-// abruffen alle exestierte players
+
   Future<void> _loadPlayers() async {
-    // _players = await PlayerStorage.loadPlayers();
+// _players = await PlayerStorage.loadPlayers();
     _players = await context.read<PlayerRepositoryStorage>().loadPlayers();
 
     setState(() {});
   }
 
-//signin
-//eMail: _email,
-// old password: _password,
-
-  // Future<void> _authenticationPlayerInFireBase() async {
-  //   await context
-  //       .read<FirebaseAuthenticationRepository>()
-  //       .createUser(_email, _password);
-  //   Navigator.of(context).pushReplacement(
-  //       MaterialPageRoute(builder: (context) => const NavigationWrapper()));
-  // }
-
-//save old
-
-  // Future<void> _addPlayers() async {
-  //   final newPlayer = Player(
-  //     eMail: _email,
-  //     password: _password,
-  //     firstName: _controllerName.text,
-  //     lastName: _controllerLastname.text,
-  //     nickName: _controllerNickname.text,
-  //     avatarUrl: _selectedAvatar,
-  //     mobileNumber: _controllerMobilnum.text,
-  //   );
-  //   setState(() {
-  //     _players.add(newPlayer);
-  //   });
-
-  //   //    List<Player> players = [player];
-  //   //    await PlayerStorage.savePlayers(_players);
-  //   await context.read<StorageRepositoryPlayer>().savePlayers(_players);
-
-  //   Navigator.of(context).pushReplacement(
-  //       MaterialPageRoute(builder: (context) => const NavigationWrapper()));
-  // }
-
-// save new
-
+// ____________________________________________________________________________
   Future<void> _authenticationPlayerInFireBaseAndSaveData() async {
     try {
       await context
@@ -138,10 +147,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
+// ____________________________________________________________________________
   Future<void> _addPlayers() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
+        getCoordinatesFromCityCode(_cityCode, _country); // dolgota i shirota
+
         final playerRef = FirebaseFirestore.instance
             .collection('players')
             .doc(_continent)
@@ -178,7 +190,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       );
     }
   }
-
+// ____________________________________________________________________________
   // void _clearFields() {
   //
   // }
@@ -203,7 +215,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             children: <Widget>[
               // Text oben
               const Text(
-                "Erstelle deinen eigenen Avatar",
+                "Create your own avatar",
                 style: TextStyle(color: Colors.white),
               ),
               const SizedBox(height: 10),
@@ -212,7 +224,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   //  categoryIcons[_selectedCategory] ?? const SizedBox.shrink(),
 
                   SizedBox(
-                    width: 230, // Уменьшенная ширина Dropdown
+                    width: 220, // Уменьшенная ширина Dropdown
 
                     child: Column(
                       children: [
@@ -283,16 +295,42 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ],
                     ),
                   ),
-
-                  const SizedBox(width: 10),
-
-                  CircleAvatar(
-                    radius: 55,
-                    backgroundImage: ExactAssetImage(_selectedAvatar),
+                  const SizedBox(width: 20),
+                  // Pic Image
+                  IconButton(
+                    iconSize: 90,
+                    icon: const Icon(
+                      Icons.folder_copy_outlined,
+                      color: Colors.blue,
+                    ),
+                    onPressed: () {
+                      // Показываем CreateAvatarAlertDialog
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CreateAvatarAlertDialog(
+                            inputtext:
+                                "Selecting photos from the album is only available in the paid version.\n"
+                                "Please choose what to do next", // Передаем текст в диалог
+                            onPickImage:
+                                _pickImage, // Функция для выбора изображения
+                            onCancel: () {
+                              // Действие при отмене (например, ничего не делать)
+                              print("User cancelled the action");
+                            },
+                          );
+                        },
+                      );
+                    }, //,в функции для выбора изображения
+                    tooltip: 'Wählen Sie ein Foto aus der Galerie aus',
+                    highlightColor: Colors.green[200],
                   ),
                 ],
               ),
-
+              CircleAvatar(
+                radius: 80,
+                backgroundImage: ExactAssetImage(_selectedAvatar),
+              ),
               // ==========================================================  Begin TextFields
               // ___________________________________________________________________ Name
 
