@@ -11,6 +11,7 @@ import 'package:dunkingclub/feature/registr/widgets/custom_dropdown.dart';
 import 'package:dunkingclub/feature/registr/widgets/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -103,6 +104,16 @@ class _AuthScreenState extends State<AuthScreen> {
       }
     }
   }
+
+  Future<void> _launchURL() async {
+    final url = Uri.parse('https://dunkingclub.web.app/');
+    if (await canLaunchUrl(url)) {
+      // Используем canLaunchUrl
+      await launchUrl(url); // Используем launchUrl
+    } else {
+      throw 'Не удалось открыть $url';
+    }
+  }
 //==========================================================
 
   @override
@@ -126,6 +137,17 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dunkingclub'),
+        actions: [
+          // Добавляем иконку, которая будет открывать веб-страницу
+          IconButton(
+            icon: const Icon(
+              Icons.help_center_outlined,
+              size: 32,
+              color: Colors.orangeAccent,
+            ), // Иконка для перехода на веб-страницу
+            onPressed: _launchURL, // Вызов функции при нажатии
+          ),
+        ],
       ),
       body: Center(
         child: Padding(

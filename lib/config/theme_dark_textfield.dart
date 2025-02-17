@@ -44,6 +44,11 @@ InputDecorationTheme customTextFieldTheme = const InputDecorationTheme(
   prefixIconColor: Color.fromARGB(255, 177, 92, 0), // Цвет иконок
   errorStyle: TextStyle(color: Colors.red), // Цвет ошибки
 
+  helperStyle: TextStyle(
+    color: Colors.orangeAccent, // Цвет подсказки
+    fontSize: 12.0,
+  ), // Размер шрифта
+
   //focusColor: Color.fromARGB(255, 255, 215, 0),
 
   //фон для поля ввода:

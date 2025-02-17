@@ -62,17 +62,20 @@ app.*.map.json
 /android/build/
 
 
-#API Keys
+# Hide all Firebase data >> add from komvik
 /lib/firebase_options.dart
-/android/app/google-services.json
 firebase-service-account.json
+firebase.json
+
+
+# Hide all API Keys >> add from komvik
+/android/app/google-services.json
 /macos/Runner/GoogleService-Info.plist
 /ios/Runner/GoogleService-Info.plist
-
-## Api Keys add from komvik
 .env
 secret_keys/
 *.key
+
 
 
 
