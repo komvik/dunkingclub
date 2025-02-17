@@ -127,6 +127,7 @@ class InfoGeneralScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
+                            // ignore: deprecated_member_use
                             color: Colors.black.withOpacity(0.6),
                             padding: const EdgeInsets.all(4),
                             child: Text(

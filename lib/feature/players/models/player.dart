@@ -15,6 +15,8 @@ class Player {
   final bool sendMessage;
   final bool online;
   final String mobileNumber;
+  final String latitude;
+  final String longitude;
 
   Player({
     this.userId = "",
@@ -31,9 +33,11 @@ class Player {
     this.sendMessage = false,
     this.online = false,
     this.mobileNumber = "-",
+    this.latitude = "0.0",
+    this.longitude = "0.0",
   });
 
-// serelisirung
+  // serelisirung
   Map<String, dynamic> toJson() {
     return {
       'userId': userId,
@@ -50,6 +54,8 @@ class Player {
       'sendMessage': sendMessage,
       'online': online,
       'mobilNumber': mobileNumber,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 
@@ -70,6 +76,8 @@ class Player {
       sendMessage: json['sendMessage'] ?? false,
       online: json['online'] ?? false,
       mobileNumber: json['mobileNumber'] ?? "-",
+      latitude: json['latitude'] ?? "0.0",
+      longitude: json['longitude'] ?? "0.0",
     );
   }
 
@@ -101,6 +109,8 @@ class Player {
       'sendMessage': sendMessage,
       'online': online,
       'mobileNumber': mobileNumber,
+      'latitude': latitude,
+      'longitude': longitude,
       // 'password' not saved
     };
   }
@@ -121,6 +131,8 @@ class Player {
       sendMessage: map['sendMessage'] ?? false,
       online: map['online'] ?? false,
       mobileNumber: map['mobileNumber'] ?? "-",
+      latitude: map['latitude'] ?? "0.0",
+      longitude: map['longitude'] ?? "0.0",
     );
   }
 }

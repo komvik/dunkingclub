@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <style>
+    /* Основные стили для body */
+    body {
+      font-family: Arial, sans-serif; /* Шрифт для всего текста */
+      margin: 0; /* Убираем внешние отступы */
+      padding: 0; /* Убираем внутренние отступы */
+      display: flex; /* Используем flexbox для выравнивания */
+      justify-content: center; /* Выравнивание по горизонтали */
+      align-items: flex-start; /* Выравнивание по вертикали */
+      height: 100vh; /* Высота страницы 100% */
+      background-color: #f0f0f0; /* Цвет фона */
+    }
+
+    /* Контейнер для левой и правой секций */
+    .container {
+      display: flex; /* Используем flexbox для размещения секций рядом */
+      width: 90%; /* Ширина контейнера 90% от ширины экрана */
+      max-width: 1200px; /* Максимальная ширина 1200px */
+      margin-top: 20px; /* Отступ сверху */
+      flex-direction: row; /* Секции рядом (по умолчанию для больших экранов) */
+    }
+
+    /* Левая секция (Меню и фото) */
+    .left-section {
+      width: 30%; /* Ширина левой секции 30% */
+      padding: 20px; /* Внутренний отступ */
+      background-color: #fff; /* Белый фон */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень для левой секции */
+      border-radius: 10px; /* Скругленные углы */
+      margin-right: 20px; /* Отступ справа */
+      text-align: center; /* Центрируем текст */
+    }
+
+    /* Стили для фото в левой секции */
+    .left-section img {
+      width: 100%; /* Ширина изображения 100% от контейнера */
+      height: auto; /* Автоматическая высота для сохранения пропорций */
+      border-radius: 50%; /* Круглое изображение */
+      margin-bottom: 20px; /* Отступ снизу */
+    }
+
+    /* Заголовок H1 в левой секции */
+    .left-section h1 {
+      font-size: 24px; /* Размер шрифта заголовка */
+      margin: 0; /* Убираем отступы */
+    }
+
+    /* Заголовок H2 в левой секции */
+    .left-section h2 {
+      font-size: 16px; /* Размер шрифта подзаголовка */
+      color: gray; /* Цвет текста серый */
+      margin-bottom: 20px; /* Отступ снизу */
+    }
+
+    /* Заголовок H3 в левой секции */
+    .left-section h3 {
+      font-size: 16px; /* Размер шрифта */
+      color: gray; /* Цвет текста серый */
+      margin-bottom: 2px; /* Маленький отступ снизу */
+    }
+
+    /* Меню в левой секции */
+    .menu {
+      list-style-type: none; /* Убираем маркеры списка */
+      padding: 2px; /* Убираем отступы */
+      text-align: center; /* Выравнивание по центру */
+      background-color: #f3f8fa; /* Белый фон */
+      border-radius: 5px; /* Скругленные углы */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень для меню */
+    }
+
+    /* Элементы списка в меню */
+    .menu li {
+      margin: 15px 2px; /* Отступ сверху и снизу */
+    }
+
+    /* Ссылки в меню */
+    .menu a {
+      text-decoration: none; /* Убираем подчеркивание у ссылок */
+      color: #333; /* Цвет текста ссылок */
+      font-size: 18px; /* Размер шрифта */
+      font-weight: bold; /* Жирный шрифт */
+      transition: color 0.3s, background-color 0.3s; /* Плавный переход */
+      padding: 5px 10px; /* Немного добавим внутренние отступы */
+      border-radius: 5px; /* Скруглим углы у ссылок */
+    }
+
+    /* Подсветка при наведении */
+    .menu a:hover {
+      background-color: #007bff; /* Фоновый цвет при наведении */
+      color: white; /* Цвет текста при наведении */
+    }
+
+    /* Правая секция (Содержимое) */
+    .right-section {
+      width: 70%; /* Ширина правой секции 70% */
+      padding: 20px; /* Внутренний отступ */
+      background-color: #fff; /* Белый фон */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень для правой секции */
+      border-radius: 10px; /* Скругленные углы */
+    }
+
+    /* Секретные блоки контента */
+    .skills, .hobby, .contact-info {
+      display: none; /* Скрываем эти блоки по умолчанию */
+    }
+
+    /* Активный блок контента */
+    .active {
+      display: block; /* Показываем активный блок */
+    }
+
+    /* Активный блок контента */
+    .skills.active, .hobby.active, .contact-info.active {
+      display: block; /* Показываем активный блок */
+    }
+
+    /* Стили для фотографии в разделе "Хобби" */
+    .hobby img {
+      width: 25%; /* Уменьшаем фотографию в 4 раза */
+      height: auto; /* Автоматическая высота для сохранения пропорций */
+      border-radius: 10px; /* Скругленные углы фотографии */
+    }
+
+    /* Медиазапросы для мобильных устройств */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column; /* На мобильных устройствах размещаем секции одну под другой */
+      }
+
+      .left-section, .right-section {
+        width: 85%; /* Уменьшаем ширину секций на мобильных */
+        margin-right: 0; /* Убираем отступ справа */
+        margin-bottom: 20px; /* Отступ снизу */
+      }
+
+      .left-section img {
+        width: 80%; /* Уменьшаем размер изображения */
+        margin-bottom: 15px; /* Убираем лишний отступ снизу */
+      }
+
+      .menu a {
+        font-size: 16px; /* Уменьшаем размер шрифта на мобильных */
+      }
+    }
+
+    /* Медиазапросы для очень старых мобильных устройств */
+    @media (max-width: 480px) {
+      body {
+        font-size: 14px; /* Уменьшаем размер шрифта */
+      }
+
+      .left-section h1 {
+        font-size: 18px; /* Уменьшаем размер шрифта */
+      }
+
+      .left-section h3, .left-section h2 {
+        font-size: 14px; /* Уменьшаем размер шрифта */
+      }
+
+      .menu li {
+        margin: 10px 0; /* Уменьшаем отступы для мобильных */
+      }
+
+      .menu a {
+        font-size: 14px; /* Еще больше уменьшаем размер шрифта */
+      }
+ 
+      .menu a.active-link {
+        background-color: #007bff; /* Фоновый цвет активной ссылки */
+        color: white; /* Цвет текста активной ссылки */
+      }
+
+      .hobby img {
+        width: 40%; /* Уменьшаем изображение */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Левая секция (Меню и Фото) -->
+    <div class="left-section">
+      <div>
+        <img src="../assets/developer_profil/viktor.jpg" alt="Viktor Kompaniyets">
+      </div>
+      <h3>Dipl.-Ing. (FH)</h3>
+      <h1>Viktor Kompaniyets</h1>
+      <h2>_________________</h2>
+      
+      <ul class="menu">
+        <li><a href="#" onclick="showSection('skills')" class="active-link">Skills</a></li>
+        <li><a href="#" onclick="showSection('hobby')">Hobby</a></li>
+        <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Правая секция (Контент) -->
+    <div class="right-section">
+      <!-- Профессиональный опыт -->
+      <div id="skills" class="skills active">
+        <h3>About Me</h3>
+        <p>My name is Viktor Kompaniyets, a 59-year-old Software Developer and Application Developer. I love developing software and finding creative solutions.</p>
+        <p>I have extensive experience in web development, app development, and network administration.</p>
+        <p>My expertise includes programming languages such as C, C++, C#, PHP, Dart, and Java.</p>
+        <p>I am always striving to create solutions that provide real value and improve user experience.</p>
+      </div>
+      
+      <!-- Hobby (Basketball) -->
+      <div id="hobby" class="hobby">
+        <h3>One of my favorite hobbies: Basketball</h3>
+        <img src="../assets/developer_profil/hobbye.png" alt="Basketball">
+        <p>I love basketball and dream of developing an app that connects all basketball fans worldwide.</p>
+        <p>For me, basketball is more than just a game – it’s a passion that promotes community and teamwork.</p>
+      </div>
+      
+      <!-- Contact Information -->
+      <div id="contact" class="contact-info">
+        <h3>Contact Information</h3>
+        <p><strong>Address:</strong> Viktor Kompaniyets, Wilhelmine-Mayer-Str. 21 · 87600 Kaufbeuren, Germany</p>
+        <p><strong>Email:</strong> entwickler7batch@gmail.com</p>
+        <p><strong>Phone:</strong> +49 15128862961</p>
+        <p><strong>Homepage:</strong> <a target="_blank" href="https://komvik.de"> Personal web page on my home server</a>  (not always available).</p>
+      </div>
+  </div>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Активировать первую секцию и ссылку
+        showSection('skills');
+      });
+
+      function showSection(section) {
+        // Скрыть все секции
+        document.querySelectorAll('.skills, .hobby, .contact-info').forEach(function(item) {
+          item.classList.remove('active');
+        });
+
+        // Убираем класс active-link у всех ссылок
+        document.querySelectorAll('.menu a').forEach(function(link) {
+          link.classList.remove('active-link');
+        });
+
+        // Показать выбранную секцию
+        document.getElementById(section).classList.add('active');
+        
+        // Добавить класс active-link к выбранной ссылке
+        document.querySelector(`.menu a[href='#${section}']`).classList.add('active-link');
+      }
+  </script>
+
+</body>
+</html>

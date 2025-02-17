@@ -48,6 +48,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String _country = "";
   String _cityCode = "";
   String _password = "";
+  String _latitude = "0.0";
+  String _longitude = "0.0";
 
   @override
   void initState() {
@@ -88,8 +90,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       if (data['results'].isNotEmpty) {
         var location = data['results'][0]['geometry']['location'];
         double latitude = location['lat'];
+        _latitude = latitude.toString(); //double value = double.parse(str);
         double longitude = location['lng'];
-
+        _longitude = longitude.toString(); //double value = double.parse(str);
         log("coordinate ($cityCode): latitude: $latitude, longitude: $longitude");
       } else {
         log("sity - code  $cityCode not found.");
@@ -152,8 +155,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        getCoordinatesFromCityCode(_cityCode, _country); // dolgota i shirota
+        await getCoordinatesFromCityCode(
+            _cityCode, _country); // dolgota i shirota
 
+//______________________________________________________ save longitude latirude
+        // final cityRef = FirebaseFirestore.instance
+        //             .collection('players')
+        //             .doc(_continent)
+        //             .collection(_country)
+        //             .doc(_cityCode);  // Ссылаемся на документ с ID _cityCode
+
+        // await cityRef.set({
+        //   'latitude': _latitude,
+        //   'longitude': _longitude,
+        // }, SetOptions(merge: true)); // merge: true позволяет обновить документ, если он уже существует
+
+//______________________________________________________ save player team
         final playerRef = FirebaseFirestore.instance
             .collection('players')
             .doc(_continent)
@@ -169,6 +186,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           'nickName': _controllerNickname.text,
           'avatarUrl': _selectedAvatar,
           'mobileNumber': _controllerMobilnum.text,
+          'latitude': _latitude,
+          'longitude': _longitude,
           'uid': user.uid,
         });
 
@@ -316,7 +335,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 _pickImage, // Функция для выбора изображения
                             onCancel: () {
                               // Действие при отмене (например, ничего не делать)
-                              print("User cancelled the action");
+                              log("User cancelled the action");
                             },
                           );
                         },
