@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D A N K I N G C L U B</title>
+    <title>D U N K I N G C L U B</title>
     <link rel="stylesheet" href="../css/app_description.css">
 </head>
+
 <body>
     <header>
-        <h1>D A N K I N G C L U B</h1>
+        <h1>D U N K I N G C L U B</h1>
         <h2>Detailed instructions for registering and using the program.</h2>
+        <a href="javascript:void(0);" onclick="goBack()">
         <img src="../assets/description/logo.png" alt="Logo" class="logo">
+        </a>
     </header>
 
     <section class="description">
@@ -187,6 +190,11 @@
     </div>
 </section>
 
-
+<script>
+    function goBack() {
+      window.location.href = "../index.html";  // Переход на index.html
+      window.close();  // Закрытие текущей страницы
+    }
+  </script>
 </body>
 </html>
