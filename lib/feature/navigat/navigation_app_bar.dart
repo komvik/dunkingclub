@@ -16,8 +16,8 @@ class NavigationAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: Image.asset(
             'assets/icons/icon_groupchat.png',
-            width: 44,
-            height: 44,
+            width: 36,
+            height: 36,
             fit: BoxFit.cover,
           ),
           tooltip: 'Go to the next page',
@@ -32,32 +32,58 @@ class NavigationAppBar extends StatelessWidget implements PreferredSizeWidget {
         //_____________________________________________ ONLINE
         Expanded(
           flex: 3,
-          child: IconButton(
-            icon: Image.asset(
-              'assets/icons/icon_player_online.png',
-              width: 44,
-              height: 44,
-              fit: BoxFit.cover,
-            ),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  margin: EdgeInsets.only(
-                    left: 120.0,
-                    right: 120.0,
-                    bottom:
-                        600.0, // Задает отступ от нижнего края (например, высота BottomNavigationBar)
-                  ),
-                  content: Text('   10 Spieler online')));
-            },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: Image.asset(
+                  'assets/icons/icon_player_online.png',
+                  width: 42,
+                  height: 42,
+                  fit: BoxFit.cover,
+                ),
+                tooltip: 'Show Snackbar',
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      margin: EdgeInsets.only(
+                        left: 120.0,
+                        right: 120.0,
+                        bottom:
+                            600.0, // Задает отступ от нижнего края (например, высота BottomNavigationBar)
+                      ),
+                      content: Text('   10 Spieler online')));
+                },
+              ),
+              //______________________________________________ Notification
+              IconButton(
+                icon: Image.asset(
+                  'assets/icons/icon_notification.png',
+                  width: 28,
+                  height: 28,
+                  fit: BoxFit.cover,
+                ),
+                tooltip: 'Show Snackbar',
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      margin: EdgeInsets.only(
+                        left: 120.0,
+                        right: 120.0,
+                        bottom:
+                            600.0, // Задает отступ от нижнего края (например, высота BottomNavigationBar)
+                      ),
+                      content: Text('   10 Spieler online')));
+                },
+              ),
+            ],
           ),
         ),
         //______________________________________________ EXIT
         IconButton(
           icon: Image.asset(
             'assets/icons/icon_exit.png',
-            width: 44,
-            height: 44,
+            width: 32,
+            height: 32,
             fit: BoxFit.cover,
           ),
           tooltip: 'Show Snackbar',

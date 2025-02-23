@@ -10,6 +10,7 @@ import 'package:dunkingclub/feature/registr/widgets/custom_text_field.dart';
 import 'package:dunkingclub/feature/registr/widgets/custom_dropdown.dart';
 import 'package:dunkingclub/feature/registr/widgets/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -136,7 +137,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dunkingclub'),
+        title: Text('DUNKINGCLUB', style: GoogleFonts.goldman(fontSize: 30)),
         actions: [
           // Добавляем иконку, которая будет открывать веб-страницу
           IconButton(
@@ -413,14 +414,13 @@ class _AuthScreenState extends State<AuthScreen> {
                     // Секция с иконкой
                     SizedBox(
                       width: 200,
-                      height: 200,
+                      height: 300,
                       child: Center(
                         child: Image.asset(
                           'assets/images/dunk_dark.png',
                         ),
                       ),
                     ),
-                    const SizedBox(width: 5),
 
                     // Секция с формой
                     Expanded(

@@ -218,7 +218,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dunkingclub'),
+        title: const Text('DUNKINGCLUB'),
       ),
       body: Form(
         key: _formKey,
@@ -244,6 +244,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                   SizedBox(
                     width: 220, // Уменьшенная ширина Dropdown
+                    // ________________________________________________________________________
 
                     child: Column(
                       children: [
@@ -282,45 +283,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             );
                           }).toList(),
                         ),
-                        SizedBox(
-                          width: 250,
-                          height: 50,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount:
-                                avatarCategories[_selectedCategory]!.length,
-                            itemBuilder: (context, index) {
-                              String avatarPath =
-                                  'assets/images_avatar/$_selectedCategory/${avatarCategories[_selectedCategory]![index]}';
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedAvatar = avatarPath;
-                                  });
-                                },
-                                child: Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  child: CircleAvatar(
-                                    radius: 20,
-                                    backgroundImage:
-                                        ExactAssetImage(avatarPath),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                        // ________________________________________________________________________
                       ],
                     ),
                   ),
                   const SizedBox(width: 20),
+                  // ________________________________________________________________________
+
                   // Pic Image
                   IconButton(
-                    iconSize: 90,
+                    iconSize: 36,
                     icon: const Icon(
                       Icons.folder_copy_outlined,
-                      color: Colors.blue,
+                      color: Color.fromARGB(255, 253, 253, 253),
                     ),
                     onPressed: () {
                       // Показываем CreateAvatarAlertDialog
@@ -346,6 +321,36 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                 ],
               ),
+              SizedBox(
+                width: 250,
+                height: 50,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: avatarCategories[_selectedCategory]!.length,
+                  itemBuilder: (context, index) {
+                    String avatarPath =
+                        'assets/images_avatar/$_selectedCategory/${avatarCategories[_selectedCategory]![index]}';
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedAvatar = avatarPath;
+                        });
+                      },
+                      // ________________________________________________________________________
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        child: CircleAvatar(
+                          radius: 20,
+                          backgroundImage: ExactAssetImage(avatarPath),
+                        ),
+                      ),
+                      // ________________________________________________________________________
+                    );
+                  },
+                ),
+              ),
+              // ________________________________________________________________________
+
               CircleAvatar(
                 radius: 80,
                 backgroundImage: ExactAssetImage(_selectedAvatar),

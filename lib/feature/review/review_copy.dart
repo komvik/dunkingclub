@@ -1,13 +1,16 @@
 import 'package:dunkingclub/feature/courts/repositories/court_data.dart';
 import 'package:flutter/material.dart';
 
-class InfoGeneralScreen extends StatelessWidget {
-  const InfoGeneralScreen({super.key});
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+class ReviewScreen1 extends StatelessWidget {
+  const ReviewScreen1({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // Контейнер с информацией о игре
         Container(
           color: const Color.fromARGB(100, 42, 105, 116),
           width: 400,
@@ -21,7 +24,7 @@ class InfoGeneralScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                "Zeit: 10:00",
+                "Zeit: 12:00",
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               Text(
@@ -38,7 +41,30 @@ class InfoGeneralScreen extends StatelessWidget {
 
         const SizedBox(height: 16),
 
-        // Новая секция для отображения площадок
+        // Контейнер с картой
+        Expanded(
+          child: Container(
+            color: Colors.orange,
+            child: GoogleMap(
+              initialCameraPosition: const CameraPosition(
+                target: LatLng(
+                    48.8566, 2.3522), // Координаты тестового местоположения
+                zoom: 14.0,
+              ),
+              markers: {
+                const Marker(
+                  markerId: MarkerId("game_location"),
+                  position: LatLng(48.8566, 2.3522),
+                  infoWindow: InfoWindow(title: "Game Location"),
+                ),
+              },
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 16),
+
+        // Контейнер для отображения списка площадок
         Container(
           color: const Color.fromARGB(62, 0, 0, 0),
           width: 400,
@@ -150,7 +176,7 @@ class InfoGeneralScreen extends StatelessWidget {
 
         const SizedBox(height: 16),
 
-        // Hier können Sie bei Bedarf einen zusätzlichen Abschnitt hinzufügen
+        // Здесь можно добавить дополнительный раздел по мере необходимости
       ],
     );
   }

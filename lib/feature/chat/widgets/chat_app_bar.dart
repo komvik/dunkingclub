@@ -16,8 +16,8 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         icon: Image.asset(
           'assets/icons/icon_undo.png',
-          width: 44,
-          height: 44,
+          width: 24,
+          height: 24,
           fit: BoxFit.cover,
         ),
         tooltip: 'Show Snackbar',
@@ -29,8 +29,8 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: Image.asset(
             'assets/icons/icon_exit.png',
-            width: 44,
-            height: 44,
+            width: 24,
+            height: 24,
             fit: BoxFit.cover,
           ),
           tooltip: 'Show Snackbar',

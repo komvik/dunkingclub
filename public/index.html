@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel ="icon" href="../assets/description/logo.png" sizes="any" >
+    <link rel ="icon" href="./assets/description/logo.png" sizes="any" >
+    <link rel="stylesheet" href="./css/index.css">
     <title>Welcome to Firebase Hosting</title>
 
     <!-- update the version number as needed -->
@@ -26,42 +27,33 @@
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="message">
-      <img src="../assets/description/logo.png" alt="Dunking Club Logo" width="200">
+      <img src="./assets/description/logo.png" alt="Dunking Club Logo" width="200">
       <h1>D U N K I N G C L U B</h1>
-      <h1>Basketball as a lifestyle</h1>
-      <h2>Join the Games!</h1>
+      <h2>Basketball as a lifestyle</h1>
+      <h3>Join the Games!</h1>
     <p><strong>Create your team and play on local courts.</strong></p>
     <ul>
         <li><strong>Easily find courts</strong> <br>Users can find available courts, and organizers can set game details.</li><br>
         <li><strong>Choose your status</strong> <br>Players can mark their participation: yes/no/maybe, aiding team planning.</li><br>
         <li><strong>Get notifications about game start</strong> <br>Notifications ensure everyone joins on time for a fun, active outdoor experience.</li><br>
     </ul>
-    <p><strong>Don’t miss out—get active and have fun with friends!</strong></p>
+    <h3><strong>Don’t miss out—get active and have fun with friends!</strong></h3>
 
-         <a href="../app_description.html" target="_blank">App description</a>
-         <a href="../developer_profil.html" target="_blank">link to the creator's profile</a>
+         <a href="./app_description.html" target="_blank">App description</a>
+         <a href="./developer_profil.html" target="_blank">link to the creator's profile</a>
   <!--   <a target="_blank" href="https://komvik.de">Link to the developer's website</a>*//-->
     </div>
     <p id="load">Firebase SDK Loading&hellip;</p>
 
     <script>
+//===========================================================================
+//                     FIREBASE SCRIPT  START
+//===========================================================================      
       document.addEventListener('DOMContentLoaded', function() {
         const loadEl = document.querySelector('#load');
         // // 🔥
@@ -98,6 +90,10 @@
           loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
         }
       });
+//===========================================================================
+//                     FIREBASE SCRIPT  END
+//===========================================================================        
     </script>
+
   </body>
 </html>

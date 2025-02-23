@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 
 final Map<String, List<String>> avatarCategories = {
+  'freelogo': [
+    'a1.png',
+    'a2.png',
+    'a3.png',
+    'a4.png',
+    'a5.png',
+    'a6.png',
+    'a7.png',
+    'a8.png',
+    'a9.png'
+  ],
   'bayernreds': [
     'a1.png',
     'a2.png',
@@ -13,17 +24,6 @@ final Map<String, List<String>> avatarCategories = {
     'a9.png'
   ],
   'djkkaufbeuren': [
-    'a1.png',
-    'a2.png',
-    'a3.png',
-    'a4.png',
-    'a5.png',
-    'a6.png',
-    'a7.png',
-    'a8.png',
-    'a9.png'
-  ],
-  'freelogo': [
     'a1.png',
     'a2.png',
     'a3.png',
@@ -48,6 +48,13 @@ final Map<String, List<String>> avatarCategories = {
 };
 
 final Map<String, Widget> categoryIcons = {
+  'freelogo': const SizedBox(
+    width: 32,
+    height: 32,
+    child: Image(
+        image: AssetImage(
+            "assets/images_avatar/icon_club_logo/icon_freelogo.png")),
+  ),
   'bayernreds': const SizedBox(
     width: 32,
     height: 32,
@@ -61,13 +68,6 @@ final Map<String, Widget> categoryIcons = {
     child: Image(
         image: AssetImage(
             "assets/images_avatar/icon_club_logo/icon_djkkaufbeuren.png")),
-  ),
-  'freelogo': const SizedBox(
-    width: 32,
-    height: 32,
-    child: Image(
-        image: AssetImage(
-            "assets/images_avatar/icon_club_logo/icon_freelogo.png")),
   ),
   'dreamplayers': const SizedBox(
     width: 32,

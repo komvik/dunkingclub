@@ -1,6 +1,6 @@
 import 'package:dunkingclub/feature/courts/screens/info_fields_screen.dart';
 import 'package:dunkingclub/feature/game_planning/screens/gameplan_screen.dart';
-import 'package:dunkingclub/feature/info_general/info_general.dart';
+import 'package:dunkingclub/feature/review/review.dart';
 import 'package:dunkingclub/feature/navigat/navigation_app_bar.dart';
 import 'package:dunkingclub/feature/players/screens/info_players_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
   // InfoGeneralScreen -> screens[_selectedIndex] -> InfoGeneralScreen -> screens[_selectedIndex] ->
 
   final List<Widget> screens = [
-    const InfoGeneralScreen(),
+    const ReviewScreen(),
     const InfoPlayersScreen(),
     const InfoFieldsScreen(),
     const GamePlanningScreen(),
@@ -36,31 +36,31 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
       ///
 
       appBar: const NavigationAppBar(),
-      backgroundColor: const Color.fromARGB(251, 86, 167, 205),
+      backgroundColor: const Color.fromARGB(255, 46, 46, 46),
       bottomNavigationBar: NavigationBarTheme(
         data: const NavigationBarThemeData(
-          indicatorColor: Color.fromARGB(255, 234, 211, 161),
+          indicatorColor: Color.fromARGB(255, 46, 46, 46),
         ),
         child: NavigationBar(
-          backgroundColor: const Color.fromARGB(255, 238, 240, 245),
+          backgroundColor: const Color.fromARGB(255, 46, 46, 46),
           selectedIndex: _selectedIndex,
           onDestinationSelected: _onItemTapped,
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           destinations: const <NavigationDestination>[
-            //__________________________________________________ Homfe
+            //__________________________________________________ Review
 
             NavigationDestination(
               icon: SizedBox(
                   width: 64,
                   height: 64,
                   child:
-                      Image(image: AssetImage("assets/icons/icon_home.png"))),
+                      Image(image: AssetImage("assets/icons/icon_review.png"))),
               selectedIcon: SizedBox(
-                  width: 128,
-                  height: 128,
+                  width: 72,
+                  height: 72,
                   child:
-                      Image(image: AssetImage("assets/icons/icon_home.png"))),
-              label: 'Home',
+                      Image(image: AssetImage("assets/icons/icon_review.png"))),
+              label: '',
             ),
             //__________________________________________________ Players
 
@@ -68,14 +68,14 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
               icon: SizedBox(
                   width: 64,
                   height: 64,
-                  child: Image(
-                      image: AssetImage("assets/icons/icon_players.png"))),
+                  child:
+                      Image(image: AssetImage("assets/icons/icon_game.png"))),
               selectedIcon: SizedBox(
-                  width: 128,
-                  height: 128,
-                  child: Image(
-                      image: AssetImage("assets/icons/icon_players.png"))),
-              label: 'Spieler',
+                  width: 72,
+                  height: 72,
+                  child:
+                      Image(image: AssetImage("assets/icons/icon_game.png"))),
+              label: '',
             ),
             //__________________________________________________ Courts
 
@@ -84,13 +84,13 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
                   width: 64,
                   height: 64,
                   child:
-                      Image(image: AssetImage("assets/icons/icon_court.png"))),
+                      Image(image: AssetImage("assets/icons/icon_courts.png"))),
               selectedIcon: SizedBox(
-                  width: 128,
-                  height: 128,
+                  width: 72,
+                  height: 72,
                   child:
-                      Image(image: AssetImage("assets/icons/icon_court.png"))),
-              label: 'Spielfelder',
+                      Image(image: AssetImage("assets/icons/icon_courts.png"))),
+              label: '',
             ),
             //__________________________________________________ Spielplanug
 
@@ -99,13 +99,13 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
                   width: 64,
                   height: 64,
                   child: Image(
-                      image: AssetImage("assets/icons/icon_gameplan.png"))),
+                      image: AssetImage("assets/icons/icon_settings.png"))),
               selectedIcon: SizedBox(
-                  width: 128,
-                  height: 128,
+                  width: 72,
+                  height: 72,
                   child: Image(
-                      image: AssetImage("assets/icons/icon_gameplan.png"))),
-              label: 'Spielplanung',
+                      image: AssetImage("assets/icons/icon_settings.png"))),
+              label: '',
             ),
           ],
         ),

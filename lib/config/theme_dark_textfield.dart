@@ -12,7 +12,7 @@ InputDecoration customTextFieldDecoration({
     labelStyle: const TextStyle(
         color: Color.fromARGB(255, 119, 249, 123)), // Цвет текста в лейбле
     prefixIcon: Icon(icon,
-        color: const Color.fromARGB(255, 255, 215, 0)), // Цвет иконки
+        color: const Color.fromARGB(255, 252, 252, 252)), // Цвет иконки
     errorText: errorText,
     border: const OutlineInputBorder(
       borderSide: BorderSide(color: oceanMeditation),
@@ -41,11 +41,11 @@ InputDecorationTheme customTextFieldTheme = const InputDecorationTheme(
   labelStyle: TextStyle(
     color: peachSmoothie,
   ), // Стиль лейблов
-  prefixIconColor: Color.fromARGB(255, 177, 92, 0), // Цвет иконок
+  prefixIconColor: Color.fromARGB(255, 255, 255, 255), // Цвет иконок
   errorStyle: TextStyle(color: Colors.red), // Цвет ошибки
 
   helperStyle: TextStyle(
-    color: Colors.orangeAccent, // Цвет подсказки
+    color: Color.fromARGB(255, 255, 255, 255), // Цвет подсказки
     fontSize: 12.0,
   ), // Размер шрифта
 
